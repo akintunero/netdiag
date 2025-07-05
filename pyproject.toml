@@ -1,0 +1,67 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "netdiag"
+version = "0.1.0"
+description = "One CLI for network troubleshooting: traceroute with BGP/ASN, DNS, latency, VPN checks, and SRE on-call presets."
+readme = "README.md"
+requires-python = ">=3.11"
+license = "MIT"
+authors = [{ name = "Olúmáyòwá Akinkuehinmi", email = "akintunero101@gmail.com" }]
+keywords = [
+    "network",
+    "traceroute",
+    "dns",
+    "ping",
+    "vpn",
+    "sre",
+    "cli",
+    "devtools",
+    "bgp",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "Intended Audience :: System Administrators",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: System :: Networking",
+    "Topic :: System :: Networking :: Monitoring",
+]
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0", "build>=1.0", "twine>=5.0"]
+
+[project.scripts]
+netdiag = "netdiag.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/akintunero/netdiag"
+Documentation = "https://github.com/akintunero/netdiag#readme"
+Repository = "https://github.com/akintunero/netdiag"
+Issues = "https://github.com/akintunero/netdiag/issues"
+
+[tool.hatch.build.targets.wheel]
+packages = ["netdiag"]
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "/netdiag",
+    "/tests",
+    "/docs",
+    "/README.md",
+    "/LICENSE",
+    "/CHANGELOG.md",
+    "/CONTRIBUTING.md",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
