@@ -1,0 +1,7 @@
+; <<>> DiG 9.10.6 <<>> +trace example.com A
+;; Received 28 bytes from 1.1.1.1#53(1.1.1.1) in 12 ms
+
+com.			172800	IN	NS	a.gtld-servers.net.
+;; Received 28 bytes from 192.5.6.30#53(192.5.6.30) in 45 ms
+
+example.com.		300	IN	A	93.184.216.34
