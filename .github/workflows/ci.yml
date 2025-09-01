@@ -1,0 +1,42 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+        python-version: ["3.11", "3.12"]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install package
+        run: python -m pip install -e ".[dev]"
+
+      - name: Run tests
+        run: pytest -q
+
+      - name: Smoke test CLI
+        run: |
+          netdiag --version
+          netdiag doctor
+          netdiag oncall 1.1.1.1 --preset api --json
+          netdiag presets --json
+          netdiag subnet 10.0.0.0/24 --json
+          netdiag completion bash | head -5
+      - name: Full CLI smoke (network)
+        if: matrix.os == 'macos-latest' && matrix.python-version == '3.12'
+        run: bash scripts/cli_smoke.sh
