@@ -1,0 +1,21 @@
+# netdiag configuration
+# Copy to: ~/.config/netdiag/config.toml
+#
+# All keys are optional. CLI flags override these defaults.
+
+[defaults]
+# Corporate hostname for resolver compare and VPN checks
+# corp_host = "app.internal.corp"
+
+# Skip BGP/ASN HTTP enrichment globally where supported
+# no_bgp_api = false
+
+# Default JSON output for commands that support --json
+# json = false
+
+[oncall]
+# Preset for `netdiag oncall` / `report` when --preset is omitted
+preset = "oncall"
+
+# Override corp host for on-call runs only
+# corp_host = "app.internal.corp"
