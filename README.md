@@ -20,11 +20,10 @@ netdiag oncall <HOST> --json
 | Method | Command |
 |--------|---------|
 | From source (dev) | `python3 -m pip install -e ".[dev]"` |
+| PyPI | `python3 -m pip install netdiag-cli` |
 | From Git | `python3 -m pip install "git+https://github.com/akintunero/netdiag.git"` |
 
-Use `python3 -m pip` (not bare `pip`) on macOS if `pip` is missing.
-
-**PyPI:** The name [`netdiag`](https://pypi.org/project/netdiag/) is already registered by another project. This repo installs from Git until a distinct PyPI name is chosen (e.g. `netdiag-cli`).
+Use `python3 -m pip` (not bare `pip`) on macOS if `pip` is missing. The PyPI package is **`netdiag-cli`**; the command is still **`netdiag`**.
 
 **System tools:** `ping` (required), plus `traceroute`, `dig`, and routing/socket tools as needed. Run `netdiag doctor` to see what is on your PATH.
 

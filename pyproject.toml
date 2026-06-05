@@ -3,7 +3,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "netdiag"
+name = "netdiag-cli"
 version = "0.1.0"
 description = "One CLI for network troubleshooting: traceroute with BGP/ASN, DNS, latency, VPN checks, and SRE on-call presets."
 readme = "README.md"

@@ -57,5 +57,5 @@ See [SECURITY.md](SECURITY.md). Do not commit API keys or internal hostnames in 
 1. Bump `version` in `pyproject.toml` and `netdiag/__init__.py`
 2. Update [CHANGELOG.md](CHANGELOG.md)
 3. `python -m build && python -m twine check dist/*`
-4. Upload to PyPI under the chosen project name (not the taken `netdiag` slot)
+4. Upload to PyPI: `python3 -m twine upload dist/*` (project name `netdiag-cli`)
 5. Tag the release on GitHub

@@ -7,7 +7,7 @@ netdiag aims to be a **trustworthy, stdlib-only CLI** that SREs and platform eng
 | Item | Status |
 |------|--------|
 | GitHub repo public and CI green | In progress |
-| PyPI publish under a **distinct** name (`netdiag` is taken) | Planned |
+| PyPI publish as **`netdiag-cli`** (`netdiag` name taken on PyPI) | Done |
 | Cookbook in `docs/` (VPN split-tunnel, DNS drift, API outage) | Done - [docs/cookbook.md](docs/cookbook.md) |
 | README badges (CI, Python) | Done |
 | Offline fixtures for ping / traceroute / `dig` parsers | Done |
