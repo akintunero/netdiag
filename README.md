@@ -4,7 +4,11 @@
 
 [![CI](https://github.com/akintunero/netdiag/actions/workflows/ci.yml/badge.svg)](https://github.com/akintunero/netdiag/actions/workflows/ci.yml)
 ![Python](https://img.shields.io/badge/python-3.11%2B-blue)
+![PyPI](https://img.shields.io/pypi/v/netdiag-cli?label=PyPI&color=blue)
+
 ![License](https://img.shields.io/badge/license-MIT-green)
+
+**Latest:** [0.1.1](CHANGELOG.md) on [PyPI](https://pypi.org/project/netdiag-cli/) (`netdiag-cli`)
 
 **Stdlib-only at runtime** · **`--json` on every command** · **Exit codes built for automation**
 
@@ -25,7 +29,7 @@ netdiag oncall <HOST> --json
 
 Use `python3 -m pip` (not bare `pip`) on macOS if `pip` is missing. The PyPI package is **`netdiag-cli`**; the command is still **`netdiag`**.
 
-**System tools:** `ping` (required), plus `traceroute`, `dig`, and routing/socket tools as needed. Run `netdiag doctor` to see what is on your PATH.
+**System tools:** `ping` (required). Recommended: `traceroute`, `dig`. Optional: **`lsof`** (macOS) or **`ss -p`** (Linux) for process names on `connections`, `listen`, and `local-ports`. Run `netdiag doctor` to see what is on your PATH.
 
 ---
 
@@ -131,19 +135,25 @@ netdiag report 1.1.1.1 -o incident.md
 | `check` | Health check; `--preset` for bundles |
 | `trace` | Traceroute + ASN/BGP enrichment |
 | `ping` / `latency` | RTT, jitter, percentiles |
-| `dns` / `dns-trace` / `dns-compare` / `dns-all` | DNS tooling |
+| `dns` / `dns-trace` / `dns-all` | DNS lookups and delegation trace |
+| **`dns-compare`** | Resolver drift; **`--corp HOST`** for internal DNS (exit `1` on mismatch) |
 | `port` / `ports` | TCP probes and scans |
 | `http` / `tls` / `redirects` / `headers` | Application layer |
 | `speed` | CDN throughput (Cloudflare by default) |
 | `compare` | Two-host DNS + ping diff |
+| `connections` | Established TCP/UDP sockets with **process name and PID** (`lsof` / `ss`) |
+| `local-ports` / `listen` | Listening ports and owning processes |
+| `route` / `ifaces` / `dns-config` | Local routing, interfaces, resolvers |
 | `presets` | List available presets |
 | `completion` | bash / zsh completions |
 
-Also: `route`, `ifaces`, `local-ports`, `connections`, `whois`, `subnet`, `ip`, `ptr`, `mtr`, and more.
+Also: `whois`, `subnet`, `ip`, `ptr`, `mtr`, and more.
 
 ```bash
 netdiag --help              # all subcommands
 netdiag <command> --help    # flags for one command
+netdiag connections --limit 10 --json
+netdiag dns-compare HOST -t A --corp app.internal --json
 ```
 
 All commands support `--json`.

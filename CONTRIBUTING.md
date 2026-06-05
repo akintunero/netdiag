@@ -17,6 +17,13 @@ python3 -m pip install -e ".[dev]"
 pytest -q
 ```
 
+Or install the published package for a smoke test without a clone:
+
+```bash
+python3 -m pip install netdiag-cli
+netdiag doctor
+```
+
 Optional full CLI smoke (requires network):
 
 ```bash
@@ -37,7 +44,7 @@ For larger features, open an issue first with the on-call or VPN use case.
 
 - [ ] `pytest -q` passes
 - [ ] New behavior has tests (fixtures preferred over live network)
-- [ ] README or [docs/](docs/) updated for new commands or flags
+- [ ] README or [docs/](docs/) updated for new commands or flags (include `--help` examples and JSON samples in [CLI contract](docs/CLI_CONTRACT.md) when output shape changes)
 - [ ] No new **required** runtime dependencies in `pyproject.toml`
 - [ ] Scanning or probing commands note authorized-use expectations
 

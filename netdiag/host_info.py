@@ -39,7 +39,9 @@ class ConnectionEntry:
     local: str
     remote: str
     state: str
-    process: str | None
+    command: str | None = None
+    pid: str | None = None
+    user: str | None = None
 
 
 def list_routes() -> list[RouteEntry]:
@@ -272,9 +274,14 @@ def _listeners_netstat() -> list[ListenProcess]:
 
 
 def list_connections() -> list[ConnectionEntry]:
+    if shutil.which("lsof"):
+        rows = _connections_lsof()
+        if rows:
+            return rows
+
     if shutil.which("ss"):
         proc = subprocess.run(
-            ["ss", "-H", "-n", "-t", "-u", "state", "established"],
+            ["ss", "-H", "-n", "-t", "-u", "-p", "state", "established"],
             capture_output=True,
             text=True,
             timeout=15,
@@ -287,6 +294,60 @@ def list_connections() -> list[ConnectionEntry]:
     return _parse_netstat_connections(proc.stdout)
 
 
+_LSOF_CONN_NAME = re.compile(
+    r"^(?P<proto>TCP|UDP)\s+(?P<local>[^-]+)->(?P<remote>\S+)\s+\((?P<state>[^)]+)\)$"
+)
+_SS_PROC = re.compile(r'users:\(\("(?P<command>[^"]+)",pid=(?P<pid>\d+)')
+
+
+def _connections_lsof() -> list[ConnectionEntry]:
+    rows: list[ConnectionEntry] = []
+    for extra in (["-iTCP", "-sTCP:ESTABLISHED"], ["-iUDP"]):
+        proc = subprocess.run(
+            ["lsof", "-nP", *extra],
+            capture_output=True,
+            text=True,
+            timeout=15,
+            check=False,
+        )
+        if proc.returncode != 0:
+            continue
+        rows.extend(_parse_lsof_connections(proc.stdout))
+    return rows
+
+
+def _parse_lsof_connections(text: str) -> list[ConnectionEntry]:
+    rows: list[ConnectionEntry] = []
+    for line in text.splitlines():
+        if line.startswith("COMMAND"):
+            continue
+        parts = line.split()
+        if len(parts) < 9:
+            continue
+        name_start = next((i for i, part in enumerate(parts) if part in ("TCP", "UDP")), None)
+        if name_start is None:
+            continue
+        name = " ".join(parts[name_start:])
+        match = _LSOF_CONN_NAME.match(name)
+        if not match:
+            continue
+        proto = match.group("proto").lower()
+        if proto == "tcp":
+            proto = "tcp4"
+        rows.append(
+            ConnectionEntry(
+                proto=proto,
+                local=match.group("local"),
+                remote=match.group("remote"),
+                state=match.group("state"),
+                command=parts[0],
+                pid=parts[1],
+                user=parts[2],
+            )
+        )
+    return rows
+
+
 def _parse_ss_output(text: str) -> list[ConnectionEntry]:
     rows: list[ConnectionEntry] = []
     for line in text.splitlines():
@@ -294,16 +355,24 @@ def _parse_ss_output(text: str) -> list[ConnectionEntry]:
         if len(parts) < 5:
             continue
         proto = parts[0]
-        state = parts[1] if len(parts) > 4 else "ESTAB"
-        local = parts[-2] if len(parts) >= 2 else parts[3]
-        remote = parts[-1]
+        state = parts[1]
+        local = parts[4] if len(parts) >= 6 else parts[3]
+        remote = parts[5] if len(parts) >= 6 else parts[4]
+        command: str | None = None
+        pid: str | None = None
+        proc_match = _SS_PROC.search(line)
+        if proc_match:
+            command = proc_match.group("command")
+            pid = proc_match.group("pid")
         rows.append(
             ConnectionEntry(
                 proto=proto,
                 local=local,
                 remote=remote,
                 state=state,
-                process=parts[5] if len(parts) > 5 else None,
+                command=command,
+                pid=pid,
+                user=None,
             )
         )
     return rows
@@ -326,6 +395,14 @@ def _parse_netstat_connections(text: str) -> list[ConnectionEntry]:
             if p.upper() in ("ESTABLISHED", "ESTAB", "SYN_SENT", "CLOSE_WAIT"):
                 state = p
         rows.append(
-            ConnectionEntry(proto=proto, local=local, remote=remote, state=state, process=None)
+            ConnectionEntry(
+                proto=proto,
+                local=local,
+                remote=remote,
+                state=state,
+                command=None,
+                pid=None,
+                user=None,
+            )
         )
     return rows

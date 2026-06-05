@@ -9,6 +9,22 @@ Versioning follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 _No changes yet._
 
+## [0.1.1] - 2025-09-05
+
+### Added
+
+- `netdiag connections` shows process name and PID (`lsof` / `ss -p`)
+- `netdiag dns-compare --corp HOST` for corporate DNS drift checks
+- `netdiag listen --json` output
+- `--help` documented in README and docs index
+- Host diagnostics docs: process columns, `dns-compare --corp`, CLI contract JSON examples
+
+### Fixed
+
+- `netdiag mtr` / traceroute RTT parsing on macOS CI
+- CI smoke uses TCP/TLS checks on Ubuntu (ICMP often blocked on GitHub runners)
+- Linux `ss` connection parsing with process info
+
 ## [0.1.0] - 2025-06-04
 
 ### Initial release
@@ -25,9 +41,10 @@ _No changes yet._
 - `--json` on every command; optional `~/.config/netdiag/config.toml`
 - Shell completions (bash / zsh); `netdiag --info` for version and environment
 - Documentation: [README](README.md), [CLI contract](docs/CLI_CONTRACT.md), [cookbook](docs/cookbook.md), CONTRIBUTING, SECURITY
-- CI on Ubuntu and macOS (Python 3.11–3.13); 95+ tests with offline fixtures
+- CI on Ubuntu and macOS (Python 3.11-3.13); 95+ tests with offline fixtures
 
 Install from source or Git - see [README](README.md#install).
 
-[Unreleased]: https://github.com/akintunero/netdiag/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/akintunero/netdiag/compare/v0.1.1...HEAD
+[0.1.1]: https://github.com/akintunero/netdiag/releases/tag/v0.1.1
 [0.1.0]: https://github.com/akintunero/netdiag/releases/tag/v0.1.0

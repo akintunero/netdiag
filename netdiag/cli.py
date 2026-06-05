@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import shutil
 import sys
 
 from netdiag import __version__
@@ -38,7 +39,7 @@ from netdiag.http_extras import (
 from netdiag.oncall import format_oncall_report, run_preset_check
 from netdiag.presets import PRESETS, get_preset
 from netdiag.vpn_diag import run_vpn_diagnostic
-from netdiag.dns_tools import dns_compare, dns_trace, parse_trace_hops
+from netdiag.dns_tools import dns_compare, dns_trace, dns_compare_is_consistent, parse_trace_hops
 from netdiag.enrichment import enrich_address, lookup_asn_cymru_dns
 from netdiag.health_check import run_health_check
 from netdiag.host_info import (
@@ -367,6 +368,11 @@ def _build_parser() -> argparse.ArgumentParser:
         default="A",
         metavar="TYPE",
         help="Record type (default A)",
+    )
+    dnscompare.add_argument(
+        "--corp",
+        metavar="HOST",
+        help="Also compare DNS for a corporate/internal hostname",
     )
 
     local_ports = sub.add_parser("local-ports", help="All TCP ports listening on this host")
@@ -803,6 +809,9 @@ def _cmd_ifaces(args: argparse.Namespace) -> int:
 
 def _cmd_listen(args: argparse.Namespace) -> int:
     rows = listeners_on_port(args.port)
+    if args.json:
+        emit_json({"port": args.port, "listeners": rows})
+        return 0 if rows else 1
     if not rows:
         print(f"No listeners on TCP port {args.port}")
         return 1
@@ -810,6 +819,8 @@ def _cmd_listen(args: argparse.Namespace) -> int:
         pid = row.pid or "-"
         user = row.user or "-"
         print(f"{row.command}  pid={pid}  user={user}  {row.bind}")
+    if rows and rows[0].command == "?" and not shutil.which("lsof"):
+        print("\n(install lsof for process names; showing netstat bind lines only)", file=sys.stderr)
     return 0
 
 
@@ -834,15 +845,30 @@ def _cmd_dns_trace(args: argparse.Namespace) -> int:
 def _cmd_dns_compare(args: argparse.Namespace) -> int:
     try:
         results = dns_compare(args.name, args.type)
+        corp_results = dns_compare(args.corp, args.type) if args.corp else None
     except RuntimeError as exc:
         print(f"error: {exc}", file=sys.stderr)
         return 2
     if args.json:
-        emit_json({"name": args.name, "type": args.type, "resolvers": results})
-        return 0
+        payload: dict[str, object] = {
+            "name": args.name,
+            "type": args.type,
+            "resolvers": results,
+        }
+        if corp_results is not None:
+            payload["corp"] = {"host": args.corp, "resolvers": corp_results}
+        emit_json(payload)
+        code = 0 if dns_compare_is_consistent(results) else 1
+        if corp_results is not None and code == 0:
+            code = 0 if dns_compare_is_consistent(corp_results) else 1
+        return code
     print_dns_compare(results, args.name)
-    mismatches = {tuple(r.records) for r in results if r.records}
-    return 0 if len(mismatches) <= 1 else 1
+    if corp_results is not None:
+        print_dns_compare(corp_results, args.corp)
+    code = 0 if dns_compare_is_consistent(results) else 1
+    if corp_results is not None and code == 0:
+        code = 0 if dns_compare_is_consistent(corp_results) else 1
+    return code
 
 
 def _cmd_local_ports(args: argparse.Namespace) -> int:
@@ -860,6 +886,8 @@ def _cmd_local_ports(args: argparse.Namespace) -> int:
             f"{row.command:<14} {(row.pid or '-'):<8} {(row.user or '-'):<12} {row.bind}"
         )
     print(f"\nTotal: {len(rows)} listeners")
+    if rows and rows[0].command == "?" and not shutil.which("lsof"):
+        print("(install lsof for process names; showing netstat bind lines only)", file=sys.stderr)
     return 0
 
 
@@ -871,10 +899,19 @@ def _cmd_connections(args: argparse.Namespace) -> int:
     if not rows:
         print("No established connections found.", file=sys.stderr)
         return 1
-    print(f"{'Proto':<6} {'Local':<24} {'Remote':<24} {'State'}")
-    print("-" * 70)
+    print(f"{'Proto':<6} {'Local':<24} {'Remote':<24} {'State':<12} {'Process'}")
+    print("-" * 90)
     for row in rows:
-        print(f"{row.proto:<6} {row.local:<24} {row.remote:<24} {row.state}")
+        proc = "-"
+        if row.command:
+            proc = row.command
+            if row.pid:
+                proc = f"{row.command} [{row.pid}]"
+        print(
+            f"{row.proto:<6} {row.local:<24} {row.remote:<24} {row.state:<12} {proc}"
+        )
+    if rows and not rows[0].command and not shutil.which("lsof"):
+        print("\n(install lsof for process names)", file=sys.stderr)
     if len(rows) == args.limit:
         print(f"\n(showing first {args.limit}; use --limit to change)")
     return 0

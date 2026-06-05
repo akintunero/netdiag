@@ -6,7 +6,7 @@ netdiag aims to be a **trustworthy, stdlib-only CLI** that SREs and platform eng
 
 | Item | Status |
 |------|--------|
-| GitHub repo public and CI green | In progress |
+| GitHub repo public and CI green | Done |
 | PyPI publish as **`netdiag-cli`** (`netdiag` name taken on PyPI) | Done |
 | Cookbook in `docs/` (VPN split-tunnel, DNS drift, API outage) | Done - [docs/cookbook.md](docs/cookbook.md) |
 | README badges (CI, Python) | Done |
@@ -15,6 +15,8 @@ netdiag aims to be a **trustworthy, stdlib-only CLI** that SREs and platform eng
 | `netdiag doctor` pre-flight | Done |
 | Config file `~/.config/netdiag/config.toml` | Done |
 | Stable CLI contract | Done |
+| `connections` process column (lsof / ss) | Done - [0.1.1](CHANGELOG.md) |
+| `dns-compare --corp` | Done - [0.1.1](CHANGELOG.md) |
 
 ## Medium term
 

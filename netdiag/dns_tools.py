@@ -105,6 +105,10 @@ def summarize_dns_compare(results: list[DnsCompareResult]) -> tuple[bool, str]:
     return False, "mismatch: " + "; ".join(parts)
 
 
+def dns_compare_is_consistent(results: list[DnsCompareResult]) -> bool:
+    return len({tuple(r.records) for r in results if r.records}) <= 1
+
+
 def parse_trace_hops(lines: list[str]) -> list[dict[str, str]]:
     """Extract delegation steps from dig +trace output."""
     hops: list[dict[str, str]] = []

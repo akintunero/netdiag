@@ -5,6 +5,7 @@
 
 [defaults]
 # Corporate hostname for resolver compare and VPN checks
+# Used by oncall, vpn, and report when --corp is omitted
 # corp_host = "app.internal.corp"
 
 # Skip BGP/ASN HTTP enrichment globally where supported

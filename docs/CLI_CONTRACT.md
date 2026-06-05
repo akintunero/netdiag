@@ -26,6 +26,8 @@ echo $?   # 0 = pass, 1 = fail, 2 = error
 
 | Situation | Code |
 |-----------|------|
+| `dns-compare` - all resolvers agree | `0` |
+| `dns-compare` - resolver mismatch | `1` |
 | `oncall` - all steps pass | `0` |
 | `oncall` - ping loss or TLS expiring soon | `1` |
 | `dns` - `dig` not installed | `2` |
@@ -68,7 +70,7 @@ netdiag doctor   # exit 0 = ready, 2 = missing required tools
 |------|----------|-------|
 | `--json` | All subcommands | Schema may grow; existing keys stay |
 | `--preset {web,api,vpn,oncall}` | `check`, `oncall`, `report` | Check bundle selection |
-| `--corp HOST` | `check`, `oncall`, `report`, `vpn` | Corporate resolver context |
+| `--corp HOST` | `check`, `oncall`, `report`, `vpn`, `dns-compare` | Corporate resolver context |
 | `--no-bgp-api` | `trace`, `whois` | Skip external BGP HTTP APIs |
 | `--vpn` | `oncall`, `report`, `vpn` | Include VPN-related checks |
 
@@ -83,6 +85,71 @@ netdiag doctor   # exit 0 = ready, 2 = missing required tools
 ```bash
 netdiag oncall "$HOST" --json | jq '.steps[] | select(.ok == false)'
 ```
+
+### `connections --json`
+
+```json
+{
+  "connections": [
+    {
+      "proto": "tcp4",
+      "local": "192.168.1.77:55820",
+      "remote": "3.86.150.204:443",
+      "state": "ESTABLISHED",
+      "command": "Cursor",
+      "pid": "829",
+      "user": "oak"
+    }
+  ],
+  "shown": 1
+}
+```
+
+`command`, `pid`, and `user` are `null` when only `netstat` is available.
+
+### `listen --json`
+
+```json
+{
+  "port": 443,
+  "listeners": [
+    {
+      "command": "nginx",
+      "pid": "1234",
+      "user": "www",
+      "bind": "*:443"
+    }
+  ]
+}
+```
+
+### `dns-compare --json`
+
+Without `--corp`:
+
+```json
+{
+  "name": "api.example.com",
+  "type": "A",
+  "resolvers": [ { "resolver": "system", "records": ["1.2.3.4"], ... } ]
+}
+```
+
+With `--corp app.internal`:
+
+```json
+{
+  "name": "api.example.com",
+  "type": "A",
+  "resolvers": [ ... ],
+  "corp": {
+    "host": "app.internal",
+    "resolvers": [ ... ]
+  }
+}
+```
+
+Exit **`1`** if any resolver set for `name` or `corp` is inconsistent.
 
 ---
 

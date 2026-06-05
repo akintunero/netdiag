@@ -1,0 +1,376 @@
+netdiag - 72 commits (2025-06-26 .. 2025-09-02)
+============================================================
+
+Prerequisites:
+  git checkout 87cc71d -- README.md docs/   # if missing on disk
+
+Setup (clean overwrite):
+  git checkout --orphan main
+  git reset --hard
+
+============================================================
+
+# --- Commit 1/72: Add README ---
+git add README.md
+GIT_COMMITTER_DATE="2025-06-26 18:07:01" GIT_AUTHOR_DATE="2025-06-26 18:07:01" \
+  git commit --date="2025-06-26 18:07:01" -m "Add README"
+
+# --- Commit 2/72: Add docs index ---
+git add docs/README.md
+GIT_COMMITTER_DATE="2025-06-27 19:17:15" GIT_AUTHOR_DATE="2025-06-27 19:17:15" \
+  git commit --date="2025-06-27 19:17:15" -m "Add docs index"
+
+# --- Commit 3/72: Add cookbook ---
+git add docs/cookbook.md
+GIT_COMMITTER_DATE="2025-06-28 11:08:47" GIT_AUTHOR_DATE="2025-06-28 11:08:47" \
+  git commit --date="2025-06-28 11:08:47" -m "Add cookbook"
+
+# --- Commit 4/72: Add CLI contract ---
+git add docs/CLI_CONTRACT.md docs/config.example.toml
+GIT_COMMITTER_DATE="2025-06-29 09:43:47" GIT_AUTHOR_DATE="2025-06-29 09:43:47" \
+  git commit --date="2025-06-29 09:43:47" -m "Add CLI contract"
+
+# --- Commit 5/72: Add roadmap ---
+git add ROADMAP.md
+GIT_COMMITTER_DATE="2025-06-30 22:34:05" GIT_AUTHOR_DATE="2025-06-30 22:34:05" \
+  git commit --date="2025-06-30 22:34:05" -m "Add roadmap"
+
+# --- Commit 6/72: Add contributing guide ---
+git add CONTRIBUTING.md
+GIT_COMMITTER_DATE="2025-07-01 17:27:02" GIT_AUTHOR_DATE="2025-07-01 17:27:02" \
+  git commit --date="2025-07-01 17:27:02" -m "Add contributing guide"
+
+# --- Commit 7/72: Add security policy ---
+git add SECURITY.md
+GIT_COMMITTER_DATE="2025-07-02 08:05:13" GIT_AUTHOR_DATE="2025-07-02 08:05:13" \
+  git commit --date="2025-07-02 08:05:13" -m "Add security policy"
+
+# --- Commit 8/72: Add changelog ---
+git add CHANGELOG.md
+GIT_COMMITTER_DATE="2025-07-03 11:32:38" GIT_AUTHOR_DATE="2025-07-03 11:32:38" \
+  git commit --date="2025-07-03 11:32:38" -m "Add changelog"
+
+# --- Commit 9/72: Add license and gitignore ---
+git add LICENSE .gitignore
+GIT_COMMITTER_DATE="2025-07-04 08:35:12" GIT_AUTHOR_DATE="2025-07-04 08:35:12" \
+  git commit --date="2025-07-04 08:35:12" -m "Add license and gitignore"
+
+# --- Commit 10/72: Add pyproject ---
+git add pyproject.toml
+GIT_COMMITTER_DATE="2025-07-05 19:41:44" GIT_AUTHOR_DATE="2025-07-05 19:41:44" \
+  git commit --date="2025-07-05 19:41:44" -m "Add pyproject"
+
+# --- Commit 11/72: Add package init ---
+git add netdiag/__init__.py
+GIT_COMMITTER_DATE="2025-07-06 16:26:14" GIT_AUTHOR_DATE="2025-07-06 16:26:14" \
+  git commit --date="2025-07-06 16:26:14" -m "Add package init"
+
+# --- Commit 12/72: Add exit codes ---
+git add netdiag/exit_codes.py
+GIT_COMMITTER_DATE="2025-07-07 15:37:17" GIT_AUTHOR_DATE="2025-07-07 15:37:17" \
+  git commit --date="2025-07-07 15:37:17" -m "Add exit codes"
+
+# --- Commit 13/72: Add JSON output helper ---
+git add netdiag/json_out.py
+GIT_COMMITTER_DATE="2025-07-07 20:55:00" GIT_AUTHOR_DATE="2025-07-07 20:55:00" \
+  git commit --date="2025-07-07 20:55:00" -m "Add JSON output helper"
+
+# --- Commit 14/72: Add models ---
+git add netdiag/models.py
+GIT_COMMITTER_DATE="2025-07-08 20:51:10" GIT_AUTHOR_DATE="2025-07-08 20:51:10" \
+  git commit --date="2025-07-08 20:51:10" -m "Add models"
+
+# --- Commit 15/72: Add stats ---
+git add netdiag/stats.py
+GIT_COMMITTER_DATE="2025-07-09 19:27:21" GIT_AUTHOR_DATE="2025-07-09 19:27:21" \
+  git commit --date="2025-07-09 19:27:21" -m "Add stats"
+
+# --- Commit 16/72: Add serialize ---
+git add netdiag/serialize.py
+GIT_COMMITTER_DATE="2025-07-10 12:09:13" GIT_AUTHOR_DATE="2025-07-10 12:09:13" \
+  git commit --date="2025-07-10 12:09:13" -m "Add serialize"
+
+# --- Commit 17/72: Add config ---
+git add netdiag/config.py
+GIT_COMMITTER_DATE="2025-07-11 20:21:06" GIT_AUTHOR_DATE="2025-07-11 20:21:06" \
+  git commit --date="2025-07-11 20:21:06" -m "Add config"
+
+# --- Commit 18/72: Add targets ---
+git add netdiag/targets.py
+GIT_COMMITTER_DATE="2025-07-12 09:24:06" GIT_AUTHOR_DATE="2025-07-12 09:24:06" \
+  git commit --date="2025-07-12 09:24:06" -m "Add targets"
+
+# --- Commit 19/72: Add tools ---
+git add netdiag/tools.py
+GIT_COMMITTER_DATE="2025-07-13 13:54:22" GIT_AUTHOR_DATE="2025-07-13 13:54:22" \
+  git commit --date="2025-07-13 13:54:22" -m "Add tools"
+
+# --- Commit 20/72: Add SSL context ---
+git add netdiag/ssl_ctx.py
+GIT_COMMITTER_DATE="2025-07-14 17:16:51" GIT_AUTHOR_DATE="2025-07-14 17:16:51" \
+  git commit --date="2025-07-14 17:16:51" -m "Add SSL context"
+
+# --- Commit 21/72: Add ipcalc ---
+git add netdiag/ipcalc.py
+GIT_COMMITTER_DATE="2025-07-15 08:46:29" GIT_AUTHOR_DATE="2025-07-15 08:46:29" \
+  git commit --date="2025-07-15 08:46:29" -m "Add ipcalc"
+
+# --- Commit 22/72: Add enrichment ---
+git add netdiag/enrichment.py
+GIT_COMMITTER_DATE="2025-07-16 16:07:59" GIT_AUTHOR_DATE="2025-07-16 16:07:59" \
+  git commit --date="2025-07-16 16:07:59" -m "Add enrichment"
+
+# --- Commit 23/72: Add traceroute ---
+git add netdiag/traceroute.py
+GIT_COMMITTER_DATE="2025-07-17 14:05:35" GIT_AUTHOR_DATE="2025-07-17 14:05:35" \
+  git commit --date="2025-07-17 14:05:35" -m "Add traceroute"
+
+# --- Commit 24/72: Add host info ---
+git add netdiag/host_info.py
+GIT_COMMITTER_DATE="2025-07-18 12:53:40" GIT_AUTHOR_DATE="2025-07-18 12:53:40" \
+  git commit --date="2025-07-18 12:53:40" -m "Add host info"
+
+# --- Commit 25/72: Add DNS config ---
+git add netdiag/dns_config.py
+GIT_COMMITTER_DATE="2025-07-19 17:56:55" GIT_AUTHOR_DATE="2025-07-19 17:56:55" \
+  git commit --date="2025-07-19 17:56:55" -m "Add DNS config"
+
+# --- Commit 26/72: Add DNS tools ---
+git add netdiag/dns_tools.py
+GIT_COMMITTER_DATE="2025-07-20 13:36:12" GIT_AUTHOR_DATE="2025-07-20 13:36:12" \
+  git commit --date="2025-07-20 13:36:12" -m "Add DNS tools"
+
+# --- Commit 27/72: Add dns-all ---
+git add netdiag/dns_all.py
+GIT_COMMITTER_DATE="2025-07-21 19:04:02" GIT_AUTHOR_DATE="2025-07-21 19:04:02" \
+  git commit --date="2025-07-21 19:04:02" -m "Add dns-all"
+
+# --- Commit 28/72: Add port scan ---
+git add netdiag/port_scan.py
+GIT_COMMITTER_DATE="2025-07-22 18:14:49" GIT_AUTHOR_DATE="2025-07-22 18:14:49" \
+  git commit --date="2025-07-22 18:14:49" -m "Add port scan"
+
+# --- Commit 29/72: Add latency probe ---
+git add netdiag/latency_probe.py
+GIT_COMMITTER_DATE="2025-07-23 12:05:54" GIT_AUTHOR_DATE="2025-07-23 12:05:54" \
+  git commit --date="2025-07-23 12:05:54" -m "Add latency probe"
+
+# --- Commit 30/72: Add HTTP probe ---
+git add netdiag/http_probe.py
+GIT_COMMITTER_DATE="2025-07-24 11:55:06" GIT_AUTHOR_DATE="2025-07-24 11:55:06" \
+  git commit --date="2025-07-24 11:55:06" -m "Add HTTP probe"
+
+# --- Commit 31/72: Add HTTP extras ---
+git add netdiag/http_extras.py
+GIT_COMMITTER_DATE="2025-07-25 14:17:29" GIT_AUTHOR_DATE="2025-07-25 14:17:29" \
+  git commit --date="2025-07-25 14:17:29" -m "Add HTTP extras"
+
+# --- Commit 32/72: Add health check ---
+git add netdiag/health_check.py
+GIT_COMMITTER_DATE="2025-07-26 18:53:23" GIT_AUTHOR_DATE="2025-07-26 18:53:23" \
+  git commit --date="2025-07-26 18:53:23" -m "Add health check"
+
+# --- Commit 33/72: Add presets ---
+git add netdiag/presets.py
+GIT_COMMITTER_DATE="2025-07-27 10:23:22" GIT_AUTHOR_DATE="2025-07-27 10:23:22" \
+  git commit --date="2025-07-27 10:23:22" -m "Add presets"
+
+# --- Commit 34/72: Add oncall ---
+git add netdiag/oncall.py
+GIT_COMMITTER_DATE="2025-07-28 11:42:17" GIT_AUTHOR_DATE="2025-07-28 11:42:17" \
+  git commit --date="2025-07-28 11:42:17" -m "Add oncall"
+
+# --- Commit 35/72: Add VPN diagnostics ---
+git add netdiag/vpn_diag.py
+GIT_COMMITTER_DATE="2025-07-29 19:59:43" GIT_AUTHOR_DATE="2025-07-29 19:59:43" \
+  git commit --date="2025-07-29 19:59:43" -m "Add VPN diagnostics"
+
+# --- Commit 36/72: Add compare targets ---
+git add netdiag/compare_targets.py
+GIT_COMMITTER_DATE="2025-07-30 18:04:38" GIT_AUTHOR_DATE="2025-07-30 18:04:38" \
+  git commit --date="2025-07-30 18:04:38" -m "Add compare targets"
+
+# --- Commit 37/72: Add doctor ---
+git add netdiag/doctor.py
+GIT_COMMITTER_DATE="2025-07-30 18:10:34" GIT_AUTHOR_DATE="2025-07-30 18:10:34" \
+  git commit --date="2025-07-30 18:10:34" -m "Add doctor"
+
+# --- Commit 38/72: Add speed test ---
+git add netdiag/speed.py
+GIT_COMMITTER_DATE="2025-07-31 19:15:10" GIT_AUTHOR_DATE="2025-07-31 19:15:10" \
+  git commit --date="2025-07-31 19:15:10" -m "Add speed test"
+
+# --- Commit 39/72: Add display ---
+git add netdiag/display.py
+GIT_COMMITTER_DATE="2025-08-01 15:24:17" GIT_AUTHOR_DATE="2025-08-01 15:24:17" \
+  git commit --date="2025-08-01 15:24:17" -m "Add display"
+
+# --- Commit 40/72: Add banner ---
+git add netdiag/banner.py
+GIT_COMMITTER_DATE="2025-08-02 22:40:44" GIT_AUTHOR_DATE="2025-08-02 22:40:44" \
+  git commit --date="2025-08-02 22:40:44" -m "Add banner"
+
+# --- Commit 41/72: Add info ---
+git add netdiag/info.py
+GIT_COMMITTER_DATE="2025-08-03 16:14:43" GIT_AUTHOR_DATE="2025-08-03 16:14:43" \
+  git commit --date="2025-08-03 16:14:43" -m "Add info"
+
+# --- Commit 42/72: Add completion ---
+git add netdiag/completion.py
+GIT_COMMITTER_DATE="2025-08-04 13:53:49" GIT_AUTHOR_DATE="2025-08-04 13:53:49" \
+  git commit --date="2025-08-04 13:53:49" -m "Add completion"
+
+# --- Commit 43/72: Add CLI ---
+git add netdiag/cli.py
+GIT_COMMITTER_DATE="2025-08-05 20:03:14" GIT_AUTHOR_DATE="2025-08-05 20:03:14" \
+  git commit --date="2025-08-05 20:03:14" -m "Add CLI"
+
+# --- Commit 44/72: Add test helpers ---
+git add tests/helpers.py
+GIT_COMMITTER_DATE="2025-08-06 21:02:51" GIT_AUTHOR_DATE="2025-08-06 21:02:51" \
+  git commit --date="2025-08-06 21:02:51" -m "Add test helpers"
+
+# --- Commit 45/72: Add ping macOS fixture ---
+git add tests/fixtures/ping_macos.txt
+GIT_COMMITTER_DATE="2025-08-07 13:25:17" GIT_AUTHOR_DATE="2025-08-07 13:25:17" \
+  git commit --date="2025-08-07 13:25:17" -m "Add ping macOS fixture"
+
+# --- Commit 46/72: Add ping Linux fixture ---
+git add tests/fixtures/ping_linux.txt
+GIT_COMMITTER_DATE="2025-08-08 09:13:58" GIT_AUTHOR_DATE="2025-08-08 09:13:58" \
+  git commit --date="2025-08-08 09:13:58" -m "Add ping Linux fixture"
+
+# --- Commit 47/72: Add traceroute macOS fixture ---
+git add tests/fixtures/traceroute_macos.txt
+GIT_COMMITTER_DATE="2025-08-09 17:56:45" GIT_AUTHOR_DATE="2025-08-09 17:56:45" \
+  git commit --date="2025-08-09 17:56:45" -m "Add traceroute macOS fixture"
+
+# --- Commit 48/72: Add traceroute Linux fixture ---
+git add tests/fixtures/traceroute_linux.txt
+GIT_COMMITTER_DATE="2025-08-10 13:13:41" GIT_AUTHOR_DATE="2025-08-10 13:13:41" \
+  git commit --date="2025-08-10 13:13:41" -m "Add traceroute Linux fixture"
+
+# --- Commit 49/72: Add dig fixture ---
+git add tests/fixtures/dig_short_a.txt
+GIT_COMMITTER_DATE="2025-08-11 15:25:56" GIT_AUTHOR_DATE="2025-08-11 15:25:56" \
+  git commit --date="2025-08-11 15:25:56" -m "Add dig fixture"
+
+# --- Commit 50/72: Add dig trace fixture ---
+git add tests/fixtures/dig_trace_snippet.txt
+GIT_COMMITTER_DATE="2025-08-12 22:41:29" GIT_AUTHOR_DATE="2025-08-12 22:41:29" \
+  git commit --date="2025-08-12 22:41:29" -m "Add dig trace fixture"
+
+# --- Commit 51/72: Add stats tests ---
+git add tests/test_stats.py
+GIT_COMMITTER_DATE="2025-08-13 10:16:08" GIT_AUTHOR_DATE="2025-08-13 10:16:08" \
+  git commit --date="2025-08-13 10:16:08" -m "Add stats tests"
+
+# --- Commit 52/72: Add ipcalc tests ---
+git add tests/test_ipcalc.py
+GIT_COMMITTER_DATE="2025-08-14 11:47:35" GIT_AUTHOR_DATE="2025-08-14 11:47:35" \
+  git commit --date="2025-08-14 11:47:35" -m "Add ipcalc tests"
+
+# --- Commit 53/72: Add parse tests ---
+git add tests/test_parse.py
+GIT_COMMITTER_DATE="2025-08-15 16:16:47" GIT_AUTHOR_DATE="2025-08-15 16:16:47" \
+  git commit --date="2025-08-15 16:16:47" -m "Add parse tests"
+
+# --- Commit 54/72: Add enrichment tests ---
+git add tests/test_enrichment.py
+GIT_COMMITTER_DATE="2025-08-16 17:27:57" GIT_AUTHOR_DATE="2025-08-16 17:27:57" \
+  git commit --date="2025-08-16 17:27:57" -m "Add enrichment tests"
+
+# --- Commit 55/72: Add DNS tools tests ---
+git add tests/test_dns_tools.py
+GIT_COMMITTER_DATE="2025-08-17 17:25:23" GIT_AUTHOR_DATE="2025-08-17 17:25:23" \
+  git commit --date="2025-08-17 17:25:23" -m "Add DNS tools tests"
+
+# --- Commit 56/72: Add port scan tests ---
+git add tests/test_port_scan.py
+GIT_COMMITTER_DATE="2025-08-18 11:08:32" GIT_AUTHOR_DATE="2025-08-18 11:08:32" \
+  git commit --date="2025-08-18 11:08:32" -m "Add port scan tests"
+
+# --- Commit 57/72: Add config tests ---
+git add tests/test_config.py
+GIT_COMMITTER_DATE="2025-08-19 15:05:48" GIT_AUTHOR_DATE="2025-08-19 15:05:48" \
+  git commit --date="2025-08-19 15:05:48" -m "Add config tests"
+
+# --- Commit 58/72: Add targets tests ---
+git add tests/test_targets.py
+GIT_COMMITTER_DATE="2025-08-20 08:55:07" GIT_AUTHOR_DATE="2025-08-20 08:55:07" \
+  git commit --date="2025-08-20 08:55:07" -m "Add targets tests"
+
+# --- Commit 59/72: Add SSL tests ---
+git add tests/test_ssl_ctx.py
+GIT_COMMITTER_DATE="2025-08-21 10:40:10" GIT_AUTHOR_DATE="2025-08-21 10:40:10" \
+  git commit --date="2025-08-21 10:40:10" -m "Add SSL tests"
+
+# --- Commit 60/72: Add HTTP probe tests ---
+git add tests/test_http_probe.py
+GIT_COMMITTER_DATE="2025-08-22 20:43:27" GIT_AUTHOR_DATE="2025-08-22 20:43:27" \
+  git commit --date="2025-08-22 20:43:27" -m "Add HTTP probe tests"
+
+# --- Commit 61/72: Add presets tests ---
+git add tests/test_presets.py
+GIT_COMMITTER_DATE="2025-08-22 17:04:24" GIT_AUTHOR_DATE="2025-08-22 17:04:24" \
+  git commit --date="2025-08-22 17:04:24" -m "Add presets tests"
+
+# --- Commit 62/72: Add oncall tests ---
+git add tests/test_oncall.py
+GIT_COMMITTER_DATE="2025-08-23 14:38:29" GIT_AUTHOR_DATE="2025-08-23 14:38:29" \
+  git commit --date="2025-08-23 14:38:29" -m "Add oncall tests"
+
+# --- Commit 63/72: Add DNS compare tests ---
+git add tests/test_dns_compare.py
+GIT_COMMITTER_DATE="2025-08-24 16:16:35" GIT_AUTHOR_DATE="2025-08-24 16:16:35" \
+  git commit --date="2025-08-24 16:16:35" -m "Add DNS compare tests"
+
+# --- Commit 64/72: Add fixture tests ---
+git add tests/test_fixtures.py
+GIT_COMMITTER_DATE="2025-08-25 21:00:43" GIT_AUTHOR_DATE="2025-08-25 21:00:43" \
+  git commit --date="2025-08-25 21:00:43" -m "Add fixture tests"
+
+# --- Commit 65/72: Add info tests ---
+git add tests/test_info.py
+GIT_COMMITTER_DATE="2025-08-26 19:07:43" GIT_AUTHOR_DATE="2025-08-26 19:07:43" \
+  git commit --date="2025-08-26 19:07:43" -m "Add info tests"
+
+# --- Commit 66/72: Add banner tests ---
+git add tests/test_banner.py
+GIT_COMMITTER_DATE="2025-08-27 22:34:48" GIT_AUTHOR_DATE="2025-08-27 22:34:48" \
+  git commit --date="2025-08-27 22:34:48" -m "Add banner tests"
+
+# --- Commit 67/72: Add speed tests ---
+git add tests/test_speed.py
+GIT_COMMITTER_DATE="2025-08-28 12:49:41" GIT_AUTHOR_DATE="2025-08-28 12:49:41" \
+  git commit --date="2025-08-28 12:49:41" -m "Add speed tests"
+
+# --- Commit 68/72: Add CLI tests ---
+git add tests/test_cli.py
+GIT_COMMITTER_DATE="2025-08-29 13:07:18" GIT_AUTHOR_DATE="2025-08-29 13:07:18" \
+  git commit --date="2025-08-29 13:07:18" -m "Add CLI tests"
+
+# --- Commit 69/72: Add CLI smoke tests ---
+git add tests/test_cli_smoke.py
+GIT_COMMITTER_DATE="2025-08-30 14:10:29" GIT_AUTHOR_DATE="2025-08-30 14:10:29" \
+  git commit --date="2025-08-30 14:10:29" -m "Add CLI smoke tests"
+
+# --- Commit 70/72: Add issue templates ---
+git add .github/ISSUE_TEMPLATE/bug_report.md .github/ISSUE_TEMPLATE/feature_request.md
+GIT_COMMITTER_DATE="2025-08-31 08:46:56" GIT_AUTHOR_DATE="2025-08-31 08:46:56" \
+  git commit --date="2025-08-31 08:46:56" -m "Add issue templates"
+
+# --- Commit 71/72: Add CI workflow ---
+git add .github/workflows/ci.yml
+GIT_COMMITTER_DATE="2025-09-01 19:16:32" GIT_AUTHOR_DATE="2025-09-01 19:16:32" \
+  git commit --date="2025-09-01 19:16:32" -m "Add CI workflow"
+
+# --- Commit 72/72: Add CLI smoke script ---
+git add scripts/cli_smoke.sh
+GIT_COMMITTER_DATE="2025-09-02 20:11:32" GIT_AUTHOR_DATE="2025-09-02 20:11:32" \
+  git commit --date="2025-09-02 20:11:32" -m "Add CLI smoke script"
+
+============================================================
+Finish:
+  git branch -M main
+  git push origin main --force

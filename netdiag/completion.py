@@ -56,7 +56,7 @@ _netdiag() {{
   fi
 
   case "${{COMP_WORDS[1]}}" in
-    oncall|check|report)
+    oncall|check|report|dns-compare)
       case "${{prev}}" in
         --preset) COMPREPLY=( $(compgen -W "{presets}" -- "${{cur}}") ) ;;
       esac
@@ -96,6 +96,9 @@ _netdiag() {{
             '--corp[corporate hostname]' \\
             '--json[JSON output]' \\
             '--url[HTTP URL]'
+          ;;
+        dns-compare)
+          _arguments '--corp[corporate hostname]' '--type[record type]' '--json[JSON output]'
           ;;
         vpn)
           _arguments '--corp[corporate hostname]' '--dns-name[public DNS name]' '--json'

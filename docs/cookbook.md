@@ -71,7 +71,12 @@ netdiag dns SERVICE -t AAAA
 netdiag dns-compare SERVICE -t A --json
 ```
 
-`dns-compare` uses system resolvers vs common public resolvers. A mismatch often means VPN DNS, split tunnel, or stale corp resolver.
+`dns-compare` uses system resolvers vs common public resolvers. A mismatch often means VPN DNS, split tunnel, or stale corp resolver. **Exit code `1`** when resolver answers differ (same as automation-friendly fail).
+
+```bash
+netdiag dns-compare SERVICE -t A --json
+echo $?   # 0 = consistent, 1 = mismatch, 2 = error (e.g. dig missing)
+```
 
 ### Full record sweep
 
@@ -87,10 +92,11 @@ netdiag dns-trace SERVICE -t A
 
 ### With corporate context
 
-When the app only exists on corp DNS, use `--corp` on `oncall` / `vpn` / `report` (resolver compare runs inside those bundles):
+When the app only exists on corp DNS, use `--corp` on `oncall` / `vpn` / `report`, or standalone compare:
 
 ```bash
 netdiag oncall SERVICE --corp CORP --json
+netdiag dns-compare SERVICE -t A --corp CORP --json
 netdiag vpn --corp CORP --json
 ```
 
@@ -301,6 +307,27 @@ netdiag dns-config --json
 netdiag route --json
 netdiag ifaces --json
 netdiag connections --limit 20 --json
+netdiag local-ports --json
+netdiag listen 443 --json
+```
+
+### Who owns this connection?
+
+`connections` shows **Process** (app name + PID) when `lsof` or `ss -p` is available:
+
+```bash
+netdiag connections --limit 10
+# Proto  Local                    Remote                   State        Process
+# tcp4   192.168.1.77:55820       3.86.150.204:443         ESTABLISHED  Cursor [829]
+```
+
+JSON fields per row: `command`, `pid`, `user`, `proto`, `local`, `remote`, `state`.
+
+### What is listening on a port?
+
+```bash
+netdiag listen 8080 --json
+netdiag local-ports --json | jq '.listeners[] | select(.bind | contains(":8080"))'
 ```
 
 Pair with `netdiag vpn` when on corporate VPN.
