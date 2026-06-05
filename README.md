@@ -139,7 +139,12 @@ netdiag report 1.1.1.1 -o incident.md
 | `presets` | List available presets |
 | `completion` | bash / zsh completions |
 
-Also: `route`, `ifaces`, `local-ports`, `connections`, `whois`, `subnet`, `ip`, `ptr`, `mtr`, and more - `netdiag --help`.
+Also: `route`, `ifaces`, `local-ports`, `connections`, `whois`, `subnet`, `ip`, `ptr`, `mtr`, and more.
+
+```bash
+netdiag --help              # all subcommands
+netdiag <command> --help    # flags for one command
+```
 
 All commands support `--json`.
 

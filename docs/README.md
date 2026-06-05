@@ -18,6 +18,15 @@ netdiag report <HOST> -o incident.md
 
 Use a real hostname or IP (`1.1.1.1`, your service FQDN). Names like `api.example.com` are reserved ([RFC 6761](https://datatracker.ietf.org/doc/html/rfc6761)) and will not resolve on the public internet.
 
+## Command help
+
+```bash
+netdiag --help              # all subcommands and global flags
+netdiag <command> --help    # flags for one command (e.g. oncall, trace, dns)
+netdiag --version           # installed version
+netdiag --info              # version, platform, repo links
+```
+
 ## Project docs (repo root)
 
 | Document | Purpose |

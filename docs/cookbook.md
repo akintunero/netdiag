@@ -11,6 +11,8 @@ Copy-paste recipes for common on-call scenarios. Replace placeholders with your 
 
 **Targets:** Use real FQDNs or IPs. Reserved names like `api.example.com` do not resolve on the public internet ([RFC 6761](https://datatracker.ietf.org/doc/html/rfc6761)).
 
+**Command reference:** `netdiag --help` lists every subcommand; `netdiag <command> --help` shows flags for that command.
+
 ---
 
 ## 0. Before every incident

@@ -3,6 +3,8 @@
 Stable behavior for **production runbooks**, CI, and on-call automation.  
 Applies from **v0.1.0** onward unless a major version notes otherwise.
 
+For flags and subcommands: `netdiag --help` and `netdiag <command> --help`.
+
 ---
 
 ## Exit codes
