@@ -23,6 +23,10 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
+      - name: Install system probes (Linux)
+        if: runner.os == 'Linux'
+        run: sudo apt-get update && sudo apt-get install -y traceroute iputils-ping
+
       - name: Install package
         run: python -m pip install -e ".[dev]"
 
@@ -33,10 +37,12 @@ jobs:
         run: |
           netdiag --version
           netdiag doctor
-          netdiag oncall 1.1.1.1 --preset api --json
+          netdiag port 1.1.1.1 443
+          netdiag tls 1.1.1.1 --json
           netdiag presets --json
           netdiag subnet 10.0.0.0/24 --json
           netdiag completion bash | head -5
+
       - name: Full CLI smoke (network)
         if: matrix.os == 'macos-latest' && matrix.python-version == '3.12'
         run: bash scripts/cli_smoke.sh

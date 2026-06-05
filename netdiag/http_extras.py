@@ -144,26 +144,48 @@ def run_mtr(target: str, *, count: int = 10, timeout: float = 30.0) -> MtrReport
 
 
 def _parse_mtr_report(target: str, text: str) -> MtrReport:
+    import re
+
+    hop_re = re.compile(r"^(\d+)")
     hops: list[MtrHop] = []
     for line in text.splitlines():
         line = line.strip()
-        if not line or line.startswith("Start:") or line.startswith("HOST:"):
+        if not line or line.startswith("Start:") or line.startswith("HOST:") or "Loss%" in line:
             continue
         parts = line.split()
-        if len(parts) < 6:
+        if len(parts) < 4:
+            continue
+        hop_match = hop_re.match(parts[0])
+        if not hop_match:
+            continue
+        hop_n = int(hop_match.group(1))
+        idx = 1
+        host: str | None = None
+        if idx < len(parts) and not parts[idx].endswith("%") and "|--" not in parts[idx]:
+            host = None if parts[idx] == "???" else parts[idx]
+            idx += 1
+        if idx >= len(parts) or not parts[idx].endswith("%"):
             continue
         try:
-            hop_n = int(parts[0].rstrip("."))
+            loss = float(parts[idx].replace("%", ""))
         except ValueError:
             continue
-        host = parts[1] if parts[1] != "???" else None
-        try:
-            loss = float(parts[2].replace("%", ""))
-            avg = float(parts[5])
-            best = float(parts[3])
-            worst = float(parts[6])
-        except (ValueError, IndexError):
+        idx += 1
+        if idx < len(parts) and parts[idx].isdigit():
+            idx += 1
+        nums: list[float] = []
+        while idx < len(parts) and len(nums) < 4:
+            try:
+                nums.append(float(parts[idx]))
+            except ValueError:
+                break
+            idx += 1
+        if len(nums) < 3:
             continue
+        if len(nums) >= 4:
+            avg, best, worst = nums[1], nums[2], nums[3]
+        else:
+            best, avg, worst = nums[0], nums[1], nums[2]
         hops.append(MtrHop(hop=hop_n, host=host, loss_pct=loss, avg_ms=avg, best_ms=best, worst_ms=worst))
     return MtrReport(target=target, mode="mtr", hops=tuple(hops), error=None if hops else "no hops parsed")
 

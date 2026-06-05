@@ -20,7 +20,7 @@ _HOP_RE = re.compile(
     r")"
     r"(.*)$"
 )
-_RTT_RE = re.compile(r"([\d.]+)\s*ms")
+_RTT_RE = re.compile(r"(\d+(?:\.\d+)?)\s*ms")
 _STAR_RE = re.compile(r"\*")
 
 
